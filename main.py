@@ -25,86 +25,87 @@ def criar_usuario():
 
     while True:
         try:
-            tipo = int(input("Digite o tipo de usuário: \n1 - Doador \n2 - Receptor \n: "))
+            print(f"{bcolors.BLUE}1-{bcolors.ENDC} Doador\n{bcolors.BLUE}2-{bcolors.ENDC} Receptor")
+            tipo = int(input(f"{bcolors.CYAN}Digite o tipo de usuário: {bcolors.ENDC}"))
             if tipo in [1, 2]:
                 break
-            print("Tipo inválido. Tente novamente.")
+            print(f"{bcolors.RED}❌ Tipo inválido. Tente novamente.{bcolors.ENDC}")
         except ValueError:
-            print("Entrada inválida. Digite um número inteiro.")
+            print(f"{bcolors.RED}❌ Entrada inválida. Digite um número inteiro.{bcolors.ENDC}")
 
     while True:
         try:
-            entidade = int(input("Digite a entidade \n1 - Pessoa Fisica, \n2 - Estabelecimento \n: "))
+            print(f"{bcolors.BLUE}1-{bcolors.ENDC} Pessoa Física\n{bcolors.BLUE}2-{bcolors.ENDC} Estabelecimento")
+            entidade = int(input(f"{bcolors.CYAN}Digite a o tipo de entidade: {bcolors.ENDC}"))
             if entidade in [1, 2]:
                 break
-            print("Entidade inválida. Tente novamente.")
+            print(f"{bcolors.RED}❌ Entidade inválida. Tente novamente.{bcolors.ENDC}")
         except ValueError:
-            print("Entrada inválida. Digite um número inteiro.")
+            print(f"{bcolors.RED}❌ Entrada inválida. Digite um número inteiro.{bcolors.ENDC}")
 
     while True:
-        nome = input("Digite seu nome de usuário: ")
+        nome = input(f"{bcolors.CYAN}Digite seu nome de usuário: {bcolors.ENDC}")
         if nome.strip():
             break
         else:
-            print("Nome de usuário não pode ser vazio. Tente novamente.")
+            print(f"{bcolors.RED}❌ Nome de usuário não pode ser vazio. Tente novamente.{bcolors.ENDC}")
 
     while True:
-        email = input("Digite seu email: ")
+        email = input(f"{bcolors.CYAN}Digite seu email: {bcolors.ENDC}")
         if email.strip():
             break
         else:
-            print("Email não pode ser vazio. Tente novamente.")
+            print(f"{bcolors.RED}❌ Email não pode ser vazio. Tente novamente.{bcolors.ENDC}")
 
     while True:
-        senha = input("Digite sua senha: ")
+        senha = input(f"{bcolors.CYAN}Digite sua senha: {bcolors.ENDC}")
         if senha.strip():
             break
         else:
-            print("Senha não pode ser vazia. Tente novamente.")
+            print(f"{bcolors.RED}❌ Senha não pode ser vazia. Tente novamente.{bcolors.ENDC}")
 
     while True:
-        telefone = input("Digite seu telefone (apenas numeros): ")
+        telefone = input(f"{bcolors.CYAN}Digite seu telefone (apenas numeros): {bcolors.ENDC}")
         if telefone.isdigit() and len(telefone) == 11:
             break
         else:
-            print("Telefone inválido. Digite apenas números.")
+            print(f"{bcolors.RED}❌ Telefone inválido. Digite apenas números.{bcolors.ENDC}")
 
     while True:
-        endereco = input("Digite seu endereço: ")
+        endereco = input(f"{bcolors.CYAN}Digite seu endereço: {bcolors.ENDC}")
         if endereco.strip():
             break
         else:
-            print("Endereço não pode ser vazio. Tente novamente.")
-
-    
+            print(f"{bcolors.RED}❌ Endereço não pode ser vazio. Tente novamente.{bcolors.ENDC}")
 
     cursor.execute("""INSERT INTO tbl_usuarios (tipo_usuario, tipo_entidade, nome_usuario, email_usuario,
                     senha_usuario) VALUES (%s, %s, %s, %s, %s)""", 
                     (tipo, entidade, nome, email, senha))
     
     # Validações adicionais para Pessoa Fisica e Estabelecimento 
+    id_novo_usuario = cursor.lastrowid
     if entidade == 1: #(Pessoa Fisica)
         while True:
-            cpf = input("Digite seu CPF (apenas numeros): ")
+            cpf = input(f"{bcolors.CYAN}Digite seu CPF (apenas numeros): {bcolors.ENDC}")
             if cpf.isdigit() and len(cpf) == 11:
                 break
             else:
-                print("CPF invalido. Digite um numero de 11 digitos.")
+                print(f"{bcolors.RED}❌ CPF inválido. Digite um número de 11 dígitos.{bcolors.ENDC}")
         cursor.execute("""INSERT INTO tbl_pessoa_fisica (nome_pessoa, cpf_pessoa, telefone_pessoa, endereco_pessoa, fk_usuario_pessoa) VALUES (%s, %s, %s, %s, %s)""",
-                        (nome, cpf, telefone, endereco, cursor.lastrowid))
+                        (nome, cpf, telefone, endereco, id_novo_usuario))
 
     elif entidade == 2: #(Estabelecimento)
         while True:
-            cnpj = input("Digite seu CNPJ (apenas numeros): ")
+            cnpj = input(f"{bcolors.CYAN}Digite seu CNPJ (apenas numeros): {bcolors.ENDC}")
             if cnpj.isdigit() and len(cnpj) == 14:
                 break
             else:
-                print("CNPJ invalido. Digite um numero de 14 digitos.")
+                print(f"{bcolors.RED}❌ CNPJ inválido. Digite um número de 14 dígitos.{bcolors.ENDC}")
         cursor.execute("""INSERT INTO tbl_estabelecimentos (nome_estabelecimento, cnpj_estabelecimento, telefone_estabelecimento, endereco_estabelecimento, fk_usuario_estabelecimento) VALUES (%s, %s, %s, %s, %s)""",
-                    (nome, cnpj, telefone, endereco, cursor.lastrowid))
+                    (nome, cnpj, telefone, endereco, id_novo_usuario))
 
     conexao.commit()
-    print("Usuario criado com sucesso!")
+    print(f"{bcolors.GREEN}✅ Usuario criado com sucesso!{bcolors.ENDC}")
     cursor.close()
     fechar_conexao(conexao)
     return
@@ -125,7 +126,7 @@ def listar_usuarios():
     maior_email = max(len(usuario[2]) for usuario in usuarios)
     print("""\n=== USUÁRIOS CADASTRADOS ===""")
     for usuario in usuarios:
-        print(f"{bcolors.BLUE}ID:{bcolors.ENDC} {usuario[0]:<2} | {bcolors.CYAN}Nome:{bcolors.ENDC} {usuario[1]:<{maior_nome}} | {bcolors.GREEN}Email: {bcolors.ENDC}{usuario[2]:<{maior_email}} | {bcolors.YELLOW}Tipo: {bcolors.ENDC}{usuario[3]:<2} | {bcolors.PINK}Entidade: {bcolors.ENDC}{usuario[4]}")
+        print(f"{bcolors.BLUE}ID:{bcolors.ENDC} {usuario[0]:<2} {bcolors.CYAN}| Nome:{bcolors.ENDC} {usuario[1]:<{maior_nome}} {bcolors.GREEN}| Email: {bcolors.ENDC}{usuario[2]:<{maior_email}} {bcolors.YELLOW}| Tipo: {bcolors.ENDC}{usuario[3]:<8} {bcolors.PINK}| Entidade: {bcolors.ENDC}{usuario[4]}")
 
     cursor.close()
     fechar_conexao(conexao)
@@ -139,42 +140,42 @@ def atualizar_usuario():
     listar_usuarios()
     while True:
         try:
-            atualizar_usuario = int(input("\nDigite o ID do usuário que deseja atualizar: "))
+            atualizar_usuario = int(input(f"\n{bcolors.CYAN}Digite o ID do usuário que deseja atualizar: {bcolors.ENDC}"))
             break
         except ValueError:
-            print("ID inválido. Digite um número inteiro.")
+            print(f"{bcolors.RED}❌ ID inválido. Digite um número inteiro.{bcolors.ENDC}")
 
     while True:
         cursor.execute("""SELECT id_usuario FROM tbl_usuarios WHERE id_usuario = %s""", (atualizar_usuario,))
         if cursor.fetchone():
             break
         else:
-            print("ID não encontrado. Tente novamente.")
+            print(f"{bcolors.RED}❌ ID não encontrado. Tente novamente.{bcolors.ENDC}")
             return
     while True:
-        novo_nome = input("Digite o novo nome do usuário (deixe em branco para manter o atual): ")
+        novo_nome = input(f"{bcolors.CYAN}Digite o novo nome do usuário (deixe em branco para manter o atual): {bcolors.ENDC}")
         if novo_nome.strip() or novo_nome == "":
             break
 
     while True:
-        novo_email = input("Digite o novo email do usuário (deixe em branco para manter o atual): ")
+        novo_email = input(f"{bcolors.CYAN}Digite o novo email do usuário (deixe em branco para manter o atual): {bcolors.ENDC}")
         if novo_email.strip() or novo_email == "":
             break
 
     while True:
-        nova_senha = input("Digite a nova senha do usuário (deixe em branco para manter a atual): ")
+        nova_senha = input(f"{bcolors.CYAN}Digite a nova senha do usuário (deixe em branco para manter a atual): {bcolors.ENDC}")
         if nova_senha.strip() or nova_senha == "":
             break
 
     while True:
-        novo_telefone = input("Digite o novo telefone do usuário (deixe em branco para manter o atual): ")
+        novo_telefone = input(f"{bcolors.CYAN}Digite o novo telefone do usuário (deixe em branco para manter o atual): {bcolors.ENDC}")
         if novo_telefone.strip() == "" or (novo_telefone.isdigit() and len(novo_telefone) == 11):
             break
         else:
-            print("Telefone inválido. Digite apenas números ou deixe em branco para manter o atual.")
+            print(f"{bcolors.RED}❌ Telefone inválido. Digite apenas números ou deixe em branco para manter o atual.{bcolors.ENDC}")
 
     while True:
-        novo_endereco = input("Digite o novo endereço do usuário (deixe em branco para manter o atual): ")
+        novo_endereco = input(f"{bcolors.CYAN}Digite o novo endereço do usuário (deixe em branco para manter o atual): {bcolors.ENDC}")
         if novo_endereco.strip() or novo_endereco == "":
             break
 
@@ -208,7 +209,7 @@ def atualizar_usuario():
                        (novo_nome, novo_telefone, novo_endereco, atualizar_usuario))
 
     conexao.commit()
-    print("Usuário atualizado com sucesso!")
+    print(f"{bcolors.GREEN}✅ Usuário atualizado com sucesso!{bcolors.ENDC}")
     cursor.close()
     fechar_conexao(conexao)
     return
@@ -221,17 +222,17 @@ def excluir_usuario():
     listar_usuarios()
     while True:
         try:
-            excluir_usuario = int(input("\nDigite o ID do usuário que deseja excluir: "))
+            excluir_usuario = int(input(f"{bcolors.CYAN}\nDigite o ID do usuário que deseja excluir: {bcolors.ENDC}"))
             break
         except ValueError:
-            print("ID inválido. Digite um número inteiro.")
+            print(f"{bcolors.RED}❌ ID inválido. Digite um número inteiro.{bcolors.ENDC}")
 
     while True:
         cursor.execute("""SELECT id_usuario FROM tbl_usuarios WHERE id_usuario = %s""", (excluir_usuario,))
         if cursor.fetchone():
             break
         else:
-            print("ID não encontrado. Tente novamente.")
+            print(f"{bcolors.RED}❌ ID não encontrado. Tente novamente.{bcolors.ENDC}")
             return
     
     cursor.execute("""SELECT fk_usuario_doacao
@@ -239,7 +240,7 @@ def excluir_usuario():
                     WHERE fk_usuario_doacao = %s""", (excluir_usuario,))
     resultado = cursor.fetchone()
     if resultado:
-        print("Usuário possui doações vinculadas. Deseja excluir o usuário e todas as doações associadas? (s/n)")
+        print(f"{bcolors.RED}❌ Usuário possui doações vinculadas. Deseja excluir o usuário e todas as doações associadas? (s/n){bcolors.ENDC}")
         opcao = input().strip().lower()
         if opcao == "s":
             # Excluir doacoes associadas
@@ -251,9 +252,9 @@ def excluir_usuario():
             # Excluir usuario
             cursor.execute("""DELETE FROM tbl_usuarios WHERE id_usuario = %s""", (excluir_usuario,))       
             conexao.commit()
-            print("Usuário excluído com sucesso!") 
+            print(f"{bcolors.GREEN}✅ Usuário excluído com sucesso!{bcolors.ENDC}") 
         else:
-            print("Exclusão cancelada.")
+            print(f"{bcolors.YELLOW}⚠️  Exclusão cancelada.{bcolors.ENDC}")
     else:
         # Excluir dependencias em tbl_pessoa_fisica e tbl_estabelecimentos
         cursor.execute("""DELETE FROM tbl_pessoa_fisica WHERE fk_usuario_pessoa = %s""", (excluir_usuario,))
@@ -261,7 +262,7 @@ def excluir_usuario():
         # Excluir usuario
         cursor.execute("""DELETE FROM tbl_usuarios WHERE id_usuario = %s""", (excluir_usuario,))
         conexao.commit()
-        print("Usuário excluído com sucesso!")
+        print(f"{bcolors.GREEN}✅ Usuário excluído com sucesso!{bcolors.ENDC}")
 
 
 
@@ -280,58 +281,58 @@ def criar_doacao():
     listar_usuarios()
     while True:
         try:
-            id_usuario = int(input("\nDigite o ID do usuário que está realizando a doação: "))
+            id_usuario = int(input(f"{bcolors.CYAN}\nDigite o ID do usuário que está realizando a doação: {bcolors.ENDC}"))
             break
         except ValueError:
-            print("ID inválido. Digite um número inteiro.")
+            print(f"{bcolors.RED}❌ ID inválido. Digite um número inteiro.{bcolors.ENDC}")
 
     while True:
         cursor.execute("""SELECT id_usuario FROM tbl_usuarios WHERE id_usuario = %s""", (id_usuario,))
         if cursor.fetchone():
             break
         else:
-            print("ID não encontrado. Tente novamente.")
+            print(f"{bcolors.RED}❌ ID não encontrado. Tente novamente.{bcolors.ENDC}")
             return
         
     while True:
-        data_doacao = input("Digite a data em que a doação foi postada (formato YYYY-MM-DD): ")
+        data_doacao = input(f"{bcolors.CYAN}Digite a data em que a doação foi postada (formato YYYY-MM-DD): {bcolors.ENDC}")
         try:
             datetime.strptime(data_doacao, "%Y-%m-%d")
             break
         except ValueError:
-            print("Data de doação inválida. Use o formato YYYY-MM-DD.")    
+            print(f"{bcolors.RED}❌ Data de doação inválida. Use o formato YYYY-MM-DD.{bcolors.ENDC}")    
     
     itens = []
     while True:   
         while True:
-            descricao = input("Digite a descrição do item a ser doado: ")
+            descricao = input(f"{bcolors.CYAN}Digite a descrição do item a ser doado: {bcolors.ENDC}")
             if descricao.strip():
                 break
             else:
-                print("Descrição não pode ser vazia. Tente novamente.")
+                print(f"{bcolors.RED}❌ Descrição não pode ser vazia. Tente novamente.{bcolors.ENDC}")
 
         while True:
-                quantidade = input("Digite a quantidade do item a ser doado: ")
+                quantidade = input(f"{bcolors.CYAN}Digite a quantidade do item a ser doado: {bcolors.ENDC}")
                 if quantidade.strip():
                     break
                 else:
-                    print("Quantidade não pode ser vazia. Tente novamente.")
+                    print(f"{bcolors.RED}❌ Quantidade não pode ser vazia. Tente novamente.{bcolors.ENDC}")
 
         while True:
-            validade = input("Digite a data de validade do item (formato YYYY-MM-DD): ")
+            validade = input(f"{bcolors.CYAN}Digite a data de validade do item (formato YYYY-MM-DD): {bcolors.ENDC}")
             try:
                 datetime.strptime(validade, "%Y-%m-%d")
                 break
             except ValueError:
-                print("Data de validade inválida. Use o formato YYYY-MM-DD.")
+                print(f"{bcolors.RED}❌ Data de validade inválida. Use o formato YYYY-MM-DD.{bcolors.ENDC}")
 
         itens.append((descricao, quantidade, validade))
         while True:
-            continuar = input("Deseja adicionar outro item? (s/n): ").strip().lower()
+            continuar = input(f"{bcolors.CYAN}Deseja adicionar outro item? (s/n): {bcolors.ENDC}").strip().lower()
             if continuar in ["s", "n"]:
                 break
             else:
-                print("Opcao inválida. Digite s ou n.")
+                print(f"{bcolors.RED}❌ Opção inválida. Digite s ou n.{bcolors.ENDC}")
         if continuar == "n":
             break
         
@@ -344,7 +345,7 @@ def criar_doacao():
                         (item[0], item[1], item[2], id_doacao))
             
     conexao.commit()
-    print("Doação criada com sucesso!")
+    print(f"{bcolors.GREEN}✅ Doação criada com sucesso!{bcolors.ENDC}")
     cursor.close()
     fechar_conexao(conexao)
     return
@@ -360,11 +361,15 @@ def listar_doacoes():
                     JOIN tbl_usuarios ON tbl_doacoes.fk_usuario_doacao = tbl_usuarios.id_usuario
                     JOIN tbl_itens_doacoes ON tbl_itens_doacoes.fk_doacao_itens = tbl_doacoes.id_doacao
                     ORDER BY tbl_doacoes.id_doacao""")
-    
     doacoes = cursor.fetchall()
+    
+    maior_id = max(len(str(doacao[0])) for doacao in doacoes)
+    maior_doador = max(len(doacao[1]) for doacao in doacoes)
+    maior_descricao = max(len(doacao[2]) for doacao in doacoes)
+    maior_quantidade = max(len(str(doacao[3])) for doacao in doacoes)
     print("""\n=== DOAÇÕES CADASTRADAS ===""")
     for doacao in doacoes:
-        print(f"{bcolors.BLUE}ID Doação:{bcolors.ENDC} {doacao[0]:<2} | {bcolors.GREEN}Doador: {bcolors.ENDC}{doacao[1]:<20} | {bcolors.YELLOW}Descrição: {bcolors.ENDC}{doacao[2]:<30} | {bcolors.CYAN}Quantidade: {bcolors.ENDC}{doacao[3]:<5} | {bcolors.PINK}Validade: {bcolors.ENDC}{doacao[4]}")
+        print(f"{bcolors.BLUE}ID Doação:{bcolors.ENDC} {doacao[0]:{maior_id}} {bcolors.CYAN}| Doador: {bcolors.ENDC}{doacao[1]:{maior_doador}} {bcolors.GREEN}| Descrição: {bcolors.ENDC}{doacao[2]:{maior_descricao}} {bcolors.YELLOW}| Quantidade: {bcolors.ENDC}{doacao[3]:{maior_quantidade}} {bcolors.PINK}| Validade: {bcolors.ENDC}{doacao[4]}")
     
     cursor.close()
     fechar_conexao(conexao)
@@ -376,8 +381,13 @@ def listar_itens_doacao(id_doacao):
 
     cursor.execute("""SELECT id_item, descricao_item, quantidade_item, validade_item FROM tbl_itens_doacoes WHERE fk_doacao_itens = %s""", (id_doacao,))
     itens = cursor.fetchall()
+    
+    maior_id = max(len(str(item[0])) for item in itens)
+    maior_descricao = max(len(item[1]) for item in itens)
+    maior_quantidade = max(len(str(item[2])) for item in itens)
+    print("\n=== ITENS DA DOAÇÃO SELECIONADA ===")
     for item in itens:
-        print(f"ID: {bcolors.BLUE}{item[0]}{bcolors.ENDC} | {bcolors.YELLOW}Descricao: {bcolors.ENDC}{item[1]:<30} | {bcolors.CYAN}Quantidade: {bcolors.ENDC}{item[2]:<5} | {bcolors.PINK}Validade: {bcolors.ENDC}{item[3]}")
+        print(f"{bcolors.BLUE}ID:{bcolors.ENDC} {item[0]:{maior_id}} {bcolors.GREEN}| Descricao:{bcolors.ENDC} {item[1]:{maior_descricao}} {bcolors.YELLOW}| Quantidade: {bcolors.ENDC}{item[2]:{maior_quantidade}} {bcolors.PINK}| Validade: {bcolors.ENDC}{item[3]}")
 
     cursor.close()
     fechar_conexao(conexao)
@@ -391,87 +401,85 @@ def atualizar_doacao():
     listar_doacoes()
     while True:
         try:
-            atualizar_doacao = int(input("\nDigite o ID da doação que deseja atualizar: "))
+            atualizar_doacao = int(input(f"{bcolors.CYAN}\nDigite o ID da doação que deseja atualizar: {bcolors.ENDC}"))
             break
         except ValueError:
-            print("ID inválido. Digite um número inteiro.")
+            print(f"{bcolors.RED}❌ ID inválido. Digite um número inteiro.{bcolors.ENDC}")
 
     while True:
         cursor.execute("""SELECT id_doacao FROM tbl_doacoes WHERE id_doacao = %s""", (atualizar_doacao,))
         if cursor.fetchone():
             break
         else:
-            print("ID não encontrado. Tente novamente.")
+            print(f"{bcolors.RED}❌ ID não encontrado. Tente novamente.{bcolors.ENDC}")
             return
         
     while True:
         try:
-            atualizar_data = input("Digite a nova data da doação (formato YYYY-MM-DD, deixe em branco para manter a atual): ")
+            atualizar_data = input(f"{bcolors.CYAN}Digite a nova data da doação (formato YYYY-MM-DD, deixe em branco para manter a atual): {bcolors.ENDC}")
             if atualizar_data.strip() == "":
                 break
             datetime.strptime(atualizar_data, "%Y-%m-%d")
             break
         except ValueError:
-            print("Data de doação inválida. Use o formato YYYY-MM-DD ou deixe em branco para manter a atual.")
+            print(f"{bcolors.RED}❌ Data de doação inválida. Use o formato YYYY-MM-DD ou deixe em branco para manter a atual.{bcolors.ENDC}")
         
     while True:
         try:
-            atualizar_itens = input("Deseja atualizar os itens da doação? (s/n): ").strip().lower()
+            atualizar_itens = input(f"{bcolors.CYAN}Deseja atualizar os itens da doação? (s/n): {bcolors.ENDC}").strip().lower()
             if atualizar_itens in ["s", "n"]:
                 break
             else:
-                print("Opção inválida. Digite s ou n.")
+                print(f"{bcolors.RED}❌ Opção inválida. Digite s ou n.{bcolors.ENDC}")
         except ValueError:
-            print("Entrada inválida. Digite s ou n.")
+            print(f"{bcolors.RED}❌ Entrada inválida. Digite s ou n.{bcolors.ENDC}")
     if atualizar_itens == "s":
         while True:
             listar_itens_doacao(atualizar_doacao)
 
             while True:
                 try:
-                    escolha_item = input("Qual item deseja atualizar? (digite o ID): ")
+                    escolha_item = input(f"{bcolors.CYAN}Qual item deseja atualizar? (digite o ID): {bcolors.ENDC}")
                     break
                 except ValueError:
-                    print("ID inválido. Digite um número inteiro.")
+                    print(f"{bcolors.RED}❌ ID inválido. Digite um número inteiro.{bcolors.ENDC}")
 
             cursor.execute("""SELECT id_item FROM tbl_itens_doacoes WHERE id_item = %s AND fk_doacao_itens = %s""", (escolha_item, atualizar_doacao))
             if not cursor.fetchone():
-                print("ID do item não encontrado para essa doação. Tente novamente.")
+                print(f"{bcolors.RED}❌ ID do item não encontrado para essa doação. Tente novamente.{bcolors.ENDC}")
                 return
-
-                    
-            cursor.execute("""SELECT descricao_item, quantidade_item, validade_item FROM tbl_itens_doacoes WHERE fk_doacao_itens = %s""", (atualizar_doacao,))
+                   
             while True:
-                    descricao = input("Digite a descrição do item a ser doado: ")
+                    descricao = input(f"{bcolors.CYAN}Digite a descrição do item a ser doado: {bcolors.ENDC}")
                     if descricao.strip():
                         break
                     else:
-                            print("Descrição não pode ser vazia. Tente novamente.")
+                            print(f"{bcolors.RED}❌ Descrição não pode ser vazia. Tente novamente.{bcolors.ENDC}")
 
             while True:
-                    quantidade = input("Digite a quantidade do item a ser doado: ")
+                    quantidade = input(f"{bcolors.CYAN}Digite a quantidade do item a ser doado: {bcolors.ENDC}")
                     if quantidade.strip():
                         break
                     else:
-                        print("Quantidade não pode ser vazia. Tente novamente.")
+                        print(f"{bcolors.RED}❌ Quantidade não pode ser vazia. Tente novamente.{bcolors.ENDC}")
 
             while True:
-                validade = input("Digite a data de validade do item (formato YYYY-MM-DD): ")
+                validade = input(f"{bcolors.CYAN}Digite a data de validade do item (formato YYYY-MM-DD): {bcolors.ENDC}")
                 try:
                     datetime.strptime(validade, "%Y-%m-%d")
                     break
                 except ValueError:
-                    print("Data de validade invalida. Use o formato YYYY-MM-DD.")
+                    print(f"{bcolors.RED}❌ Data de validade inválida. Use o formato YYYY-MM-DD.{bcolors.ENDC}")
 
             cursor.execute("""UPDATE tbl_itens_doacoes SET descricao_item = %s, quantidade_item = %s, validade_item = %s WHERE id_item = %s""",
                             (descricao, quantidade, validade, escolha_item))
 
             while True:
-                continuar = input("Deseja atualizar outro item? (s/n): ").strip().lower()
+                continuar = input(f"{bcolors.CYAN}Deseja atualizar outro item? (s/n): {bcolors.ENDC}").strip().lower()
                 if continuar in ["s", "n"]:
                     break
                 else:
-                    print("Opção invalida. Digite s ou n.")
+                    print(f"{bcolors.RED}❌ Opção inválida. Digite s ou n.{bcolors.ENDC}")
             if continuar == "n":
                 break
 
@@ -480,7 +488,7 @@ def atualizar_doacao():
                     (atualizar_data, atualizar_doacao))
     
     conexao.commit()
-    print("Doação atualizada com sucesso!")
+    print(f"{bcolors.GREEN}✅ Doação atualizada com sucesso!{bcolors.ENDC}")
     cursor.close()
     fechar_conexao(conexao)
     return
@@ -488,6 +496,32 @@ def atualizar_doacao():
 
 def excluir_doacao():
     # Exercicio 8: excluir uma doacao por id, removendo primeiro os itens de tbl_itens_doacoes.
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    listar_doacoes()
+    while True:
+        try:
+            id_doacao = int(input(f"\n{bcolors.CYAN}Digite o ID da doação que deseja excluir: {bcolors.ENDC}"))
+            break
+        except ValueError:
+            print(f"{bcolors.RED}❌ ID inválido. Digite um número inteiro.{bcolors.ENDC}")
+
+    while True:
+        cursor.execute("""SELECT id_doacao FROM tbl_doacoes WHERE id_doacao = %s""", (id_doacao,))
+        if cursor.fetchone():
+            break
+        else:
+            print(f"{bcolors.RED}❌ ID não encontrado. Tente novamente.{bcolors.ENDC}")
+            return
+        
+    cursor.execute("""DELETE FROM tbl_itens_doacoes WHERE fk_doacao_itens = %s""", (id_doacao,))
+    cursor.execute("""DELETE FROM tbl_doacoes WHERE id_doacao = %s""", (id_doacao,))
+
+    conexao.commit()
+    print(f"{bcolors.GREEN}✅ Doação excluída com sucesso!{bcolors.ENDC}")
+    cursor.close()
+    fechar_conexao(conexao)
     return
 
 
@@ -506,22 +540,25 @@ def menu():
     while True:
         print("\n=== MENU EcoMesa - CRUD COMPLETO ===")
         for codigo, (descricao, _) in opcoes.items():
-            print(f"{codigo} - {descricao}")
-        print("0 - Sair")
+            if int(codigo) <= 4:                      #Diferenciar as opções de usuário e doação por cor
+                cor = bcolors.CYAN                    # 🟦 = Ciano para usuários
+            else:
+                cor = bcolors.GREEN                   # 🟩 = Verde para doações
+            print(f"{cor}{codigo} - {descricao}{bcolors.ENDC}")
+        print(f"{bcolors.RED}0 - Sair{bcolors.ENDC}")
 
         escolha = input("Escolha uma opcao: ").strip()
 
         if escolha == "0":
-            print("Saindo do sistema.")
+            print(f"{bcolors.YELLOW}⚠️  Saindo do sistema.{bcolors.ENDC}")
             break
 
         if escolha in opcoes:
             descricao, funcao = opcoes[escolha]
-            print(f"\nSelecionado: {descricao}")
+            print(f"{bcolors.BOLD}\nSelecionado: {descricao}{bcolors.ENDC}")
             funcao()
-            print("Exercicio em estrutura base (return vazio).")
         else:
-            print("Opcao invalida. Tente novamente.")
+            print(f"{bcolors.RED}❌ Opcao invalida. Tente novamente.{bcolors.ENDC}")
 
 
 menu()
