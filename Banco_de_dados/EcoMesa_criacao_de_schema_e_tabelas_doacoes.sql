@@ -23,3 +23,6 @@ ALTER TABLE tbl_itens_doacoes
 ADD CONSTRAINT fk_doacao_itens
 FOREIGN KEY (fk_doacao_itens)
 REFERENCES tbl_doacoes(id_doacao);
+
+-- aumentar quantidade de caracteres permitida em quantidade_item
+ALTER TABLE tbl_itens_doacoes MODIFY COLUMN quantidade_item VARCHAR(150);
