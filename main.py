@@ -450,26 +450,34 @@ def atualizar_doacao():
                 return
                    
             while True:
-                    descricao = input(f"{bcolors.CYAN}Digite a descrição do item a ser doado: {bcolors.ENDC}")
-                    if descricao.strip():
+                    descricao = input(f"{bcolors.CYAN}Digite a descrição do item a ser doado{bcolors.ENDC} {bcolors.YELLOW}(deixe em branco para manter a atual): {bcolors.ENDC}")
+                    if descricao.strip() or descricao == "":
                         break
-                    else:
-                            print(f"{bcolors.RED}❌ Descrição não pode ser vazia. Tente novamente.{bcolors.ENDC}")
 
             while True:
-                    quantidade = input(f"{bcolors.CYAN}Digite a quantidade do item a ser doado: {bcolors.ENDC}")
-                    if quantidade.strip():
+                    quantidade = input(f"{bcolors.CYAN}Digite a quantidade do item a ser doado{bcolors.ENDC} {bcolors.YELLOW}(deixe em branco para manter a atual): {bcolors.ENDC}")
+                    if quantidade.strip() or quantidade == "":
                         break
-                    else:
-                        print(f"{bcolors.RED}❌ Quantidade não pode ser vazia. Tente novamente.{bcolors.ENDC}")
 
             while True:
-                validade = input(f"{bcolors.CYAN}Digite a data de validade do item (formato YYYY-MM-DD): {bcolors.ENDC}")
+                validade = input(f"{bcolors.CYAN}Digite a data de validade do item (formato YYYY-MM-DD){bcolors.ENDC} {bcolors.YELLOW}(deixe em branco para manter a atual): {bcolors.ENDC}")
+                if validade.strip() == "":
+                    break
                 try:
                     datetime.strptime(validade, "%Y-%m-%d")
                     break
                 except ValueError:
                     print(f"{bcolors.RED}❌ Data de validade inválida. Use o formato YYYY-MM-DD.{bcolors.ENDC}")
+
+            # cursor.execute("""UPDATE tbl_itens_doacoes SET descricao_item = %s, quantidade_item = %s, validade_item = %s WHERE id_item = %s""",
+            #                 (descricao, quantidade, validade, escolha_item))
+
+            cursor.execute("""SELECT descricao_item, quantidade_item, validade_item FROM tbl_itens_doacoes WHERE id_item = %s""", (escolha_item,))
+            atual_item = cursor.fetchone()
+
+            descricao = descricao if descricao.strip() else atual_item[0]
+            quantidade = quantidade if quantidade.strip() else atual_item[1]
+            validade = validade if validade.strip() else atual_item[2]
 
             cursor.execute("""UPDATE tbl_itens_doacoes SET descricao_item = %s, quantidade_item = %s, validade_item = %s WHERE id_item = %s""",
                             (descricao, quantidade, validade, escolha_item))
@@ -538,7 +546,7 @@ def menu():
     }
 
     while True:
-        print("\n=== MENU EcoMesa - CRUD COMPLETO ===")
+        print("\n=== MENU EcoMesa ===")
         for codigo, (descricao, _) in opcoes.items():
             if int(codigo) <= 4:                      #Diferenciar as opções de usuário e doação por cor
                 cor = bcolors.CYAN                    # 🟦 = Ciano para usuários
