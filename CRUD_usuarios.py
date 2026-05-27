@@ -20,7 +20,7 @@ def criar_usuario():
 
     while True:
         try:
-            print(f"{bcolors.BLUE}1-{bcolors.ENDC} Doador\n{bcolors.BLUE}2-{bcolors.ENDC} Receptor")
+            print(f"\n{bcolors.BLUE}1-{bcolors.ENDC} Doador\n{bcolors.BLUE}2-{bcolors.ENDC} Receptor")
             tipo = int(input(f"{bcolors.CYAN}Digite o tipo de usuário: {bcolors.ENDC}"))
             if tipo in [1, 2]:
                 break
@@ -30,7 +30,7 @@ def criar_usuario():
 
     while True:
         try:
-            print(f"{bcolors.BLUE}1-{bcolors.ENDC} Pessoa Física\n{bcolors.BLUE}2-{bcolors.ENDC} Estabelecimento")
+            print(f"\n{bcolors.BLUE}1-{bcolors.ENDC} Pessoa Física\n{bcolors.BLUE}2-{bcolors.ENDC} Estabelecimento")
             entidade = int(input(f"{bcolors.CYAN}Digite a o tipo de entidade: {bcolors.ENDC}"))
             if entidade in [1, 2]:
                 break

@@ -34,7 +34,7 @@ def menu_principal():
             print("Encerrando o sistema.")
             break
         else:
-            print("Opcao invalida. Tente novamente.")
+            print(f"{bcolors.RED}❌ Opcao invalida. Tente novamente.{bcolors.ENDC}")
 
 
 if __name__ == "__main__":
