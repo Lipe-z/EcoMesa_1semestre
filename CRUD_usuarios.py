@@ -135,7 +135,7 @@ def atualizar_usuario():
     listar_usuarios()
     while True:
         try:
-            atualizar_usuario = int(input(f"\n{bcolors.CYAN}Ryu, The RunnerDigite o ID do usuário que deseja atualizar: {bcolors.ENDC}"))
+            atualizar_usuario = int(input(f"\n{bcolors.CYAN}Digite o ID do usuário que deseja atualizar: {bcolors.ENDC}"))
             break
         except ValueError:
             print(f"{bcolors.RED}❌ ID inválido. Digite um número inteiro.{bcolors.ENDC}")
