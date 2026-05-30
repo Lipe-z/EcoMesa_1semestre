@@ -58,6 +58,12 @@ O EcoMesa foi criado com a missão de transformar o excesso em acesso, conectand
 
 ---
 
+## Links do Projeto
+
+- 🎨 Figma EcoMesa
+- 🗂️ Miro EcoMesa
+- 💻 GitHub EcoMesa
+
 ## Equipe
 
 Projeto desenvolvido como atividade acadêmica pelos integrantes da equipe EcoMesa.
