@@ -1,1 +1,68 @@
-# EcoMesa_1semestre
+![alt text](Ecomesa_Logo.png)
+
+# 🌱 EcoMesa
+
+## Sobre o Projeto
+
+O **EcoMesa** é uma plataforma desenvolvida com o objetivo de combater o desperdício de alimentos e facilitar a distribuição de doações para pessoas e instituições que necessitam de apoio alimentar.
+
+Através do sistema, estabelecimentos como restaurantes, mercados, padarias e outros comércios podem cadastrar alimentos excedentes que ainda estão próprios para consumo. Os usuários beneficiários podem visualizar as doações disponíveis e solicitar sua retirada de forma simples e organizada.
+
+O projeto busca unir tecnologia, sustentabilidade e impacto social, contribuindo para a redução do desperdício de alimentos e para o combate à insegurança alimentar.
+
+---
+
+## Objetivos
+
+* Reduzir o desperdício de alimentos.
+* Facilitar a conexão entre doadores e beneficiários.
+* Incentivar práticas sustentáveis.
+* Promover o acesso a alimentos para pessoas em situação de vulnerabilidade.
+* Utilizar a tecnologia como ferramenta de transformação social.
+
+---
+
+## Funcionalidades
+
+* Cadastro de usuários e estabelecimentos.
+* Login e autenticação.
+* Cadastro de doações de alimentos.
+* Visualização de doações disponíveis.
+* Solicitação de doações.
+* Histórico de doações.
+
+---
+
+## Público-Alvo
+
+* Restaurantes
+* Mercados
+* Padarias
+* Instituições beneficentes
+* Pessoas em situação de vulnerabilidade alimentar
+
+---
+
+## Tecnologias Utilizadas
+
+* Figma (Prototipação)
+* GitHub (Versionamento)
+* Miro (Planejamento)
+* Python e SQL
+
+---
+
+## Impacto Social
+
+O EcoMesa foi criado com a missão de transformar o excesso em acesso, conectando quem possui alimentos disponíveis para doação a quem realmente precisa deles. Dessa forma, o projeto contribui para a construção de uma sociedade mais sustentável, solidária e consciente.
+
+---
+
+## Equipe
+
+Projeto desenvolvido como atividade acadêmica pelos integrantes da equipe EcoMesa.
+
+* Luis Felipe Silva Santos
+* Flávio Marques Lopes Rosa 
+* Heloisa Marques Lopes Rosa
+* Sophia de Oliveira Ferreira
