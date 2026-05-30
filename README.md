@@ -1,3 +1,5 @@
+<img width="1536" height="1024" alt="Ecomesa_Logo" src="https://github.com/user-attachments/assets/b26e3755-4ff9-47cc-8cf9-b24d70adb90f" />
+
 # 🌱 EcoMesa
 
 ## Sobre o Projeto
