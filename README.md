@@ -60,9 +60,11 @@ O EcoMesa foi criado com a missão de transformar o excesso em acesso, conectand
 
 ## Links do Projeto
 
-- 🎨 Figma EcoMesa
-- 🗂️ Miro EcoMesa
-- 💻 GitHub EcoMesa
+- 🎨 Figma: https://www.figma.com/make/AsK6Np5Mt473zuSlK7LFVQ/Prot%C3%B3tipo-EcoMesa-app-design?fullscreen=1&t=OzWg8Ldyypu6qPk0-1&code-node-id=0-9
+
+ - 🗂️ Miro: https://miro.com/welcomeonboard/TDBkZFZyWXBPakh0WnNheldRM2VmcEZuZTNxcy9QNUlXUWVDZ0dnTExBRVFIeDlOdTJNbER4KzdqQmZ2RXNIVVlLRERPY3dsM0djTU9tT3RRL0p4a1o0OTdFcXNlNFZ3YmUxbFE0OEp2QjEwd3Q5c0pXa0hmNjI3VDhsVlVDRjZyVmtkMG5hNDA3dVlncnBvRVB2ZXBnPT0hdjE=?share_link_id=229476776725
+
+- 💻 GitHub: https://github.com/Lipe-z/EcoMesa_1semestre/tree/main
 
 ## Equipe
 
