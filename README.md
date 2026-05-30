@@ -1,5 +1,3 @@
-![alt text](Ecomesa_Logo.png)
-
 # 🌱 EcoMesa
 
 ## Sobre o Projeto
